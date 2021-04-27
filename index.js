@@ -8,8 +8,9 @@ require('dotenv').config();
 
 const io = require('socket.io')(httpServer, {
   cors: {
-    origin: process.env.URL,
-    methods: ['GET', 'POST'],
+    origin: '*',
+    // origin: process.env.URL,
+    // methods: ['GET', 'POST'],
   },
 });
 const { createMessage } = require('./src/models/messages');

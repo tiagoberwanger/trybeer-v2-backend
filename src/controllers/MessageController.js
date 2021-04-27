@@ -13,8 +13,8 @@ MessageController.get('/', async (req, res) => {
 });
 
 MessageController.post('/', async (req, res) => {
-  const { email, message, date } = req.body;
-  const newMessage = await createMessage(email, message, date);
+  const { from, to, message, date } = req.body;
+  const newMessage = await createMessage(from, to, message, date);
   res.status(200).send(newMessage);
 });
 

@@ -6,7 +6,7 @@ const getLastMessageByEmail = async () => {
     .aggregate([
       { 
         $group: { 
-          _id: '$email',
+          _id: '$from',
           lastDate: { $max: '$date' },
         },
       },
@@ -24,7 +24,7 @@ const getLastMessageByEmail = async () => {
 const getMessagesByEmail = async (email) => {
   const messages = await connection()
     .then((db) => db.collection('messages')
-    .find({ email })
+    .find({ $or: [{ from: email }, { to: email }] })
     .toArray());
   return messages;
 };

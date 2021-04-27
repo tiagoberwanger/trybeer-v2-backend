@@ -4,18 +4,24 @@ const path = require('path');
 
 const app = express();
 const httpServer = require('http').createServer(app);
-
 const io = require('socket.io')(httpServer, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: ['https://tiagoberwanger-front.herokuapp.com/', 'http://localhost:3000'],
     methods: ['GET', 'POST'],
   },
 });
+const { createMessage } = require('./src/models/messages');
 
 io.on('connection', (socket) => {
-  console.log(`${socket.id} connected`);
-  socket.on('disconnect', () => {
-    console.log(`${socket.id} disconnected`);
+  socket.on('privateRoom', (key) => {
+    socket.join(key);
+  });
+
+  socket.on('chatMessage', (data) => {
+    const { from, to, message, date } = data;
+    const key = [from, to].sort().join('-');
+    io.to(key).emit('serverMessage', data);
+    createMessage(from, to, message, date);
   });
 });
 

@@ -4,9 +4,11 @@ const path = require('path');
 
 const app = express();
 const httpServer = require('http').createServer(app);
+require('dotenv').config();
+
 const io = require('socket.io')(httpServer, {
   cors: {
-    origin: ['https://tiagoberwanger-front.herokuapp.com/', 'http://localhost:3000'],
+    origin: process.env.URL,
     methods: ['GET', 'POST'],
   },
 });

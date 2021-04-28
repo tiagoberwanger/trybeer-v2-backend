@@ -1,4 +1,4 @@
-# trybeer-v2-backend
+# Project Trybeer version 2 - Backend
 
 ### Features
 
